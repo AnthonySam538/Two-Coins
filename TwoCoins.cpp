@@ -4,32 +4,32 @@ using namespace std;
 
 double selectAndFlip(int flips)
 {
-  int tails; //amount of times tails was on the other side
-  //int valid; //amount of valid flips
-  
+  int heads = 0; //amount of times the fair coin landed on heads (which would reveal tails on the other side)
+  int tails = 0; //amount of times the fair coin landed on tails
+
   for(int x = 0; x < flips; x++)
   {
     //randomly select a coin
-    if(rand() % 2)
+    if(rand() % 2) //fair coin selected
     {
-      //flip the fair coin
-      if(rand() % 2 == 1) //landed on heads
-        tails += 1; //tails is on the other side
-      else //landed on tails, which is not allowed
-        flips -= 1; //subtract 1 since it wasn't a valid flip
+      if(rand() % 2) //fair coin landed on heads
+        heads++;
+      else //fair coin landed on tails (not allowed)
+        tails++;
     }
   }
-  return tails/flips;
+  
+  return (double)heads/(flips-tails); //the amount of times tails was on the other side divided by the amount of valid flips
 }
 
 
 int main()
 {
   srand(time(NULL));
-  
-  int flips = 100;
-  
-  cout << selectAndFlip(flips);
-  
+
+  int flips = 5000;
+
+  cout << "Tails was on the other side " << selectAndFlip(flips) * 100 << "% of the time.\n";
+
   return 0;
 }
